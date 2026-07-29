@@ -1,0 +1,43 @@
+flowchart TB
+
+  subgraph TRAIN["TRAIN ONCE, before any hiding"]
+    direction TB
+    T1["Declared silence spec"] --> T2["Reference sampler draws floor examples"]
+    T2 --> T3["Train integer-reversible flow by maximum likelihood on the draws"]
+    T3 --> M["Trained flow weights = the model = the only reader"]
+  end
+
+  subgraph CONCEAL["CONCEAL: image to silence"]
+    direction TB
+    C1["Image"] --> C2["Canonical object, raster or vector claim, F5"]
+    C2 --> C3["Append checksum SHA-256"]
+    C3 --> C4["Lossless compress"]
+    C4 --> C5["Whiten to uniform bits, public and keyless"]
+    C5 --> C6["Map bits to the flow base latent, exact inverse-CDF"]
+    FR["Fresh randomness fills unused capacity, F36"] --> C6
+    C6 --> C7["Integer-reversible flow, generative direction"]
+    C7 --> C8["Integer floor coefficients"]
+    C8 --> C9["Integer synthesis transform"]
+    C9 --> C10["24-bit PCM, no dither"]
+    C10 --> WAV["stego.wav, the single file"]
+  end
+
+  subgraph REVEAL["REVEAL: silence to image"]
+    direction TB
+    W2["Read 24-bit PCM from stego.wav"] --> R2["Integer analysis transform"]
+    R2 --> R3["Integer floor coefficients"]
+    R3 --> R4["Integer-reversible flow, inverse direction"]
+    R4 --> R5["Recover base latent, map back to bits, exact CDF"]
+    R5 --> R6["Discard the fresh-randomness fill"]
+    R6 --> R7["De-whiten"]
+    R7 --> R8["Decompress"]
+    R8 --> R9["Verify checksum"]
+    R9 --> R10["Render image from the canonical object"]
+  end
+
+  WAV --> W2
+  M -. same weights, generative .-> C7
+  M -. same weights, inverse .-> R4
+
+  classDef learned stroke-width:3px;
+  class T3,M,C7,R4 learned;
