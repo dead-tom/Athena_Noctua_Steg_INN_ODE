@@ -9,7 +9,9 @@ HOW THIS FILE WORKS:
 - Refs column points to the numbered reference list at the bottom. "—" = no paper, it's a design/instinct idea.
 - This is the ideas home. STATE.md holds current status, locked rules, plan and gates; it can point here rather than duplicate the table.
 
-Last updated: 24 July 2026.
+Last updated: 29 July 2026.
+
+**29 Jul 2026 — restructure and two unread references (LOG H-010).** No idea in the table below changed. Two things did. (1) File paths: this register now lives at `lab/IDEAS.md`, alongside STATE, LOG, PLAN and DECISIONS; the reasoning behind resolved choices has moved to `lab/DECISIONS.md` and the R0–R7 ladder to `lab/PLAN.md`. (2) References 26 and 27 were added and are UNREAD. Both sit close to the committed architecture — GSN (26) is a generative-steganography network in the F25/F29 lineage, and the content-preserving linguistic work (27) is in the F15/F33 whitening-and-matching lineage — so both may move a LEAD number or, if either introduces a genuinely new structural option, earn an F39. Do not adjust any row until they have actually been read.
 
 **24 Jul 2026 — Level-3 pivot (LOG H-007).** The build is now distribution-preserving cover-synthesis (the stego is a *sampled* noise floor whose coordinates encode the payload), not perturbation hiding (floor + delta). The security bar is Level 3: indistinguishable from a genuine floor to *any* distinguisher, provable via the coupling theorem, not "beats the one detector we trained". Net effect on this register: F3, F6, F20, F25 promoted to lead 10; F15 resurrected as load-bearing; F4, F22, F23 reassigned/demoted; F29–F38 appended; silence itself defined as F35. All status changes are in place per the contextual-status rule; no rows removed.
 
@@ -66,7 +68,7 @@ Last updated: 24 July 2026.
 
 ## REFERENCES
 
-Refs 1–11 verified against the project PDFs. 12–13 carry a confirm-from-arXiv flag. 14–15 verified via web search (24 Jul). 16–18 verified against uploaded PDFs (24 Jul). 19–21 are standard/attribution (not re-verified against source this session). 22–25 carry a confirm-before-citing flag.
+Refs 1–11 verified against the project PDFs. Refs 26–27 added 29 Jul and NOT YET READ — their one-line summaries are provisional and must be checked against the papers before any of them is cited or allowed to move a LEAD. 12–13 carry a confirm-from-arXiv flag. 14–15 verified via web search (24 Jul). 16–18 verified against uploaded PDFs (24 Jul). 19–21 are standard/attribution (not re-verified against source this session). 22–25 carry a confirm-before-citing flag.
 
 1. **WavInWav** — Fan, Chen, Wang, Zhang, Yu. *Time-domain Speech Hiding via Invertible Neural Network.* arXiv:2510.02915v1, 2025. Nearest INN-audio prior art; multi-resolution STFT loss, L_z Gaussian prior on residual, encryption add-on. The lineage F23 sits in.
 2. **HiNet** — Jing, Deng, Xu, Wang, Guan. *Deep Image Hiding by Invertible Network.* ICCV 2021, pp. 4733–4742. Hide-in-transform-domain template behind F2/F4.
@@ -93,5 +95,8 @@ Refs 1–11 verified against the project PDFs. 12–13 carry a confirm-from-arXi
 23. **Constant Composition Distribution Matching** — arXiv:1503.05133. [ChatGPT-suggested; confirm authors/venue from arXiv before citing]
 24. **Arithmetic Distribution Matching** — arXiv:1408.3931. [confirm from arXiv before citing]
 25. **Distribution-Preserving Steganography Based on Text-to-Speech Generative Models** — arXiv:1811.03732. [confirm from arXiv before citing]
+
+26. **Generative Steganography Network** — Yu, C. et al. ACM MM 2022. arXiv:2207.13867v3. Cover-free stego image synthesis: a secret block folds payload into the generator's feature maps, with hierarchical gradient decay for steganalysis resistance, plus a discriminator and a steganalyzer. Sits in the F25/F29 generative lineage; read for how it handles payload-conditioned generation and what its security claim actually is (adversarial, not Level-3 — check). *(added 29 Jul, UNREAD)*
+27. **A Content-Preserving Secure Linguistic Steganography** — arXiv:2511.12565v2. Linguistic-domain content preservation under secure embedding. Read for its treatment of the whitening/matching step and whether its security definition is Cachin-style; relevant to F15/F33. *(added 29 Jul, UNREAD; confirm authors and venue from arXiv before citing)*
 
 **Extraction note:** the original project PDFs' text layers did not yield to standard extraction (likely vector-outlined text); metadata was recovered via the project-knowledge index and each paper's own citations. Refs 1–11 solid; 12–13 flagged; 14–18 verified this session (14–15 web, 16–18 uploaded PDFs); 19–21 standard/attribution; 22–25 confirm-before-citing.
