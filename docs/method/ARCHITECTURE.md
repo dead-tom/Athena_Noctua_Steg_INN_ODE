@@ -14,6 +14,7 @@ The output file is not a recording with something hidden in it. It is a syntheti
 |---|---|---|---|---|
 | Canonical payload object | $S$ | The declared, checksummed object to be carried — grayscale, single channel, declared as raster or vector | F5, F18 | bytes |
 | Checksum | $\Gamma$ | SHA-256 over the declared object, appended | — | bytes |
+| Lossless compression | $C$ | Reduces payload length before whitening. Public, keyless | — | bytes |
 | Whitening | $W$ | Public, keyless mask making the bitstream uniform. Not secrecy — uniformity | F15 | bits |
 | Distribution matcher | $\Phi$ | Measure-preserving map from uniform bits to coordinates under the model's conditional CDFs | F33 | bits ↔ latent |
 | Fresh-randomness fill | $r$ | Fills unused capacity with genuine prior draws at conceal, so the same image gives a different file each run | F36 | latent |
@@ -30,7 +31,8 @@ Two directions of the flow: **inference direction** is data → latent (what max
 flowchart TD
     subgraph CONCEAL
         A[Canonical image object<br/>grayscale, declared form] --> B[Checksum over the declared object]
-        B --> C[Whiten to uniform bitstream<br/>public, keyless]
+        B --> BC[Lossless compress]
+        BC --> C[Whiten to uniform bitstream<br/>public, keyless]
         C --> D{Distribution matcher<br/>uniform bits to latent coordinates}
         R[Fresh randomness<br/>fills unused capacity] --> D
         D --> E[Trained integer-reversible flow<br/>generative direction]
@@ -43,7 +45,8 @@ flowchart TD
         H --> I[Same flow, inference direction]
         I --> J{Matcher inverse<br/>latent coordinates to uniform bits}
         J --> K[De-whiten]
-        K --> L[Canonical object + checksum verify]
+        K --> KD[Decompress]
+        KD --> L[Canonical object + checksum verify]
     end
 
     subgraph EVALUATION
@@ -56,18 +59,19 @@ flowchart TD
 
 ## Conceal, steps
 
-$$b = W(\Gamma(S)), \qquad z = \Phi(b \Vert r), \qquad \tilde{H} = f_\theta^{-1}(z)$$
+$$b = W(C(\Gamma(S))), \qquad z = \Phi(b \Vert r), \qquad \tilde{H} = f_\theta^{-1}(z)$$
 
 1. Take the canonical image object : grayscale, single channel, in the exact declared form (F5, F18). Compute the checksum over *that* object, not over a rendering of it.
-2. Whiten the byte stream to uniform. This step is public and keyless; its purpose is that a uniform payload keeps the latent matching its prior, which is what keeps the output matching the floor.
-3. Feed the uniform bits to the distribution matcher, which maps them onto latent coordinates under the model's conditional CDFs. Capacity not consumed by the payload is filled with genuine fresh prior draws (F36) never zero-padded, since zero-variance coordinates in a full-variance floor are an instant detector win.
-4. Run the flow in the generative direction. Out come integer PCM samples.
-5. Export once to WAV PCM_24. No dither, no normalisation, no limiter, no secondary chunks. The payload lives only in sample values.
-6. Check with spectrogram that nothing shows up.
+2. Compress the checksummed object losslessly. The checksum is computed before compression and verifies the declared object, not the compressed stream.
+3. Whiten the byte stream to uniform. This step is public and keyless; its purpose is that a uniform payload keeps the latent matching its prior, which is what keeps the output matching the floor.
+4. Feed the uniform bits to the distribution matcher, which maps them onto latent coordinates under the model's conditional CDFs. Capacity not consumed by the payload is filled with genuine fresh prior draws (F36) never zero-padded, since zero-variance coordinates in a full-variance floor are an instant detector win.
+5. Run the flow in the generative direction. Out come integer PCM samples.
+6. Export once to WAV PCM_24. No dither, no normalisation, no limiter, no secondary chunks. The payload lives only in sample values.
+7. Check with spectrogram that nothing shows up.
 
 ## Reveal, steps
 
-$$\hat{z} = f_\theta(\tilde{H}), \qquad \hat{b} = \Phi^{-1}(\hat{z})\big|_{1:m}, \qquad \hat{S} = \Gamma^{-1}(W^{-1}(\hat{b}))$$
+$$\hat{z} = f_\theta(\tilde{H}), \qquad \hat{b} = \Phi^{-1}(\hat{z})\big|_{1:m}, \qquad \hat{S} = \Gamma^{-1}(C^{-1}(W^{-1}(\hat{b})))$$
 
 Reveal is a deterministic decode from the file alone. It consumes no randomness — all the randomness was spent at conceal.
 
@@ -75,7 +79,10 @@ Reveal is a deterministic decode from the file alone. It consumes no randomness 
 2. Run the flow in the inference direction to recover the latent coordinates exactly.
 3. Invert the matcher to recover the uniform bitstream.
 4. De-whiten.
-5. Verify the checksum. It matches exactly, or the reveal has failed. There is no partial credit and no eyeballing the result.
+5. Decompress.
+6. Verify the checksum. It matches exactly, or the reveal has failed. There is no partial credit and no eyeballing the result.
+````
+````
 
 ## System Characteristics
 

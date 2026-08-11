@@ -31,6 +31,7 @@ The payload determines which draw. The only map into the output is $z \mapsto \t
 | $p_\theta$ | model law, $f_\theta^{-1}\#p_Z$ |
 | $S$, $\hat{S}$ | payload, recovered payload |
 | $\Gamma$ | SHA-256 checksum appended; $\Gamma^{-1}$ strips and verifies |
+| $C$ | lossless compression; $C^{-1}$ decompresses |
 | $W$ | whitening |
 | $b$ | whitened payload bits, length $m$ |
 | $r$ | fresh randomness, redrawn per file |
@@ -39,7 +40,7 @@ The payload determines which draw. The only map into the output is $z \mapsto \t
 | $\tilde{H}$ | the stego |
 | $Q$ | the law of $\tilde{H}$ |
 
-$P$, $\theta$, $p_Z$, $\Gamma$, $W$ and $\Phi$ are public. There is no key (`D-THESIS`).
+$P$, $\theta$, $p_Z$, $\Gamma$, $C$, $W$ and $\Phi$ are public. There is no key (`D-THESIS`).
 
 ---
 
@@ -85,9 +86,9 @@ equal to $\arg\min_\theta D_{\mathrm{KL}}(P \Vert p_\theta)$ up to an additive c
 
 ## 6. Payload and coupling
 
-$$b = W\!\left(\Gamma(S)\right) \in \{0,1\}^m$$
+$$b = W\!\left(C(\Gamma(S))\right) \in \{0,1\}^m$$
 
-$\Gamma$ appends a 256-bit digest. $W$ maps the object's bytes to a uniform bitstream; it is public and keyless and provides no confidentiality (`D-THESIS`). Payload length is fixed by the claim contract at R0, not carried in the stream.
+$\Gamma$ appends a 256-bit digest over the declared object. $C$ compresses losslessly. $W$ maps the result to a uniform bitstream; it is public and keyless and provides no confidentiality (`D-THESIS`). Payload length is fixed by the claim contract at R0, not carried in the stream.
 
 **W.1.** $b$ is indistinguishable from an i.i.d. fair-coin sequence given $W$ and the class from which $S$ is drawn.
 
@@ -113,11 +114,11 @@ $r$ is not a key: recovery reads $b$ from the payload coordinates without refere
 
 **Embedding.**
 
-$$b = W(\Gamma(S)), \qquad z = \Phi(b \Vert r), \qquad \tilde{H} = f_\theta^{-1}(z)$$
+$$b = W(C(\Gamma(S))), \qquad z = \Phi(b \Vert r), \qquad \tilde{H} = f_\theta^{-1}(z)$$
 
 **Recovery.**
 
-$$\hat{z} = f_\theta(\tilde{H}), \qquad \hat{b} = \Phi^{-1}(\hat{z})\big|_{1:m}, \qquad \hat{S} = \Gamma^{-1}\!\left(W^{-1}(\hat{b})\right)$$
+$$\hat{z} = f_\theta(\tilde{H}), \qquad \hat{b} = \Phi^{-1}(\hat{z})\big|_{1:m}, \qquad \hat{S} = \Gamma^{-1}\!\left(C^{-1}(W^{-1}(\hat{b}))\right)$$
 
 **Two gaps.** $f_\theta^{-1}$ is a bijection and preserves KL divergence exactly. Writing
 
@@ -162,6 +163,7 @@ $\hat{S} = S$ bit-exactly under four conditions:
 - **R.2** Bit-identical $\theta$ at both ends, pinned by checksum in `MODEL_CARD.md`.
 - **R.3** Verbatim storage: WAV PCM_24, no dither, no normalisation, no limiter, no secondary chunks (`D-FLOAT/EXPORT`).
 - **R.4** Flow output within 24-bit signed range, or wrapping guaranteed by the layer construction.
+- **R.5** Declared, frozen compression format. $C^{-1}$ must be bit-exact against $C$; the format is pinned in `MODEL_CARD.md` alongside $\theta$.
 
 Then $\hat{z} = z$, $\hat{b} = b$, and $\hat{S} = S$. Verification is the checksum: pass or fail, with no partial measure.
 
@@ -176,6 +178,7 @@ Then $\hat{z} = z$, $\hat{b} = b$, and $\hat{S} = S$. Verification is the checks
 | Layer construction of $f_\theta$ | R3 |
 | Concrete form of $W$ | R2 |
 | Integer overflow discipline (R.4) | R3 |
+| Concrete form of $C$ | R2 |
 
 ---
 

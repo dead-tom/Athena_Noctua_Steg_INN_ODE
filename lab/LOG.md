@@ -155,3 +155,12 @@ CHANGES: deletes `docs/concept/ATHENA_NOCTUA.md` and `docs/concept/ON_SYNTHETIC_
 
 NEXT SESSION: convert all concept media to PNG and fill the six TODO slots. Then resolve the notation question — decide whether `PROJECT_CONCEPT.md` keeps March notation with a pointer to `FORMULATION.md`, or is annotated in place; if the latter, that is a D-entry. Then bring `ARCHITECTURE.md` into agreement with the Sequential Steps. Refs 26 and 27 (Generative Steganography Network; A Content-Preserving Secure Linguistic Steganography) remain unread and were first flagged at H-010 — they have now been carried across two sessions.
 
+### [H-013] — 2026-08-11 — TYPE: DECISION
+QUESTION: PIPELINE.mermaid C4/R8 carry a lossless compression stage that FORMULATION §6 omits. Which is correct?
+RESULT: Compression kept. FORMULATION and ARCHITECTURE corrected to include it; PIPELINE.mermaid unchanged and confirmed governing. Symbol is C, restoring the operator glyph lost in the abstract's PDF extraction and flagged for checking at H-011 — that open item is now closed for C. M (assembly of payload bits, fresh randomness and padding into the latent vector) is Φ in FORMULATION and remains to be confirmed against the abstract.
+The reconciliation recorded at the concept-restructure entry stated that ARCHITECTURE.md and pipeline.mermaid agree. They did not: ARCHITECTURE's inline diagram omitted both lossless compression and the integer analysis/synthesis transform. Correction by addition — the reconciliation was recorded in the header but not carried into the diagram body. The integer analysis/synthesis transform remains absent from ARCHITECTURE's inline diagram and is not addressed here.
+Repository: `runs/` was not in fact gitignored, though D-REPO records it as such. Rule added (`runs/*`, `!runs/.gitkeep`) and verified with git check-ignore. Only `.gitkeep` had been tracked, so no machine output entered the repository.
+Repository moved from ~/Dropbox/GITHUB/ to ~/Projects/Athena_Noctua_Steg_INN_ODE and pushed to GitHub. STATE §6 updated.
+D-COMPRESS opened and resolved. R.5 added to FORMULATION §9. Concrete form of C set at R2.
+VERDICT: compression retained as capacity headroom, not as a security component. It reduces m only; it does not change Q. Reversible if R1 shows ample margin.
+Windows training machine not yet re-cloned — Dropbox folder removed, fresh clone from GitHub to C:\Users\tessa\Projects\ outstanding; STATE §6 Windows path is stale until then.

@@ -65,6 +65,12 @@ Entry format: **Question → Decision → Why → Consequences → Status**.
 - **Consequences.** Phase-1 audio is now untracked and disposable by design; the record of Phase 1 is H-001–H-004 plus the EXP write-ups. STATE §3 and §4 become pointers to PLAN and this file. A subpackage layout for `src/` (flow/crypto/embedding/audio/evaluation) was considered and rejected as premature — promote a module to a folder only when it genuinely needs three files.
 - **Status.** RESOLVED 29 Jul 2026 — LOG H-010.
 
+### D-COMPRESS — Is the payload losslessly compressed before whitening?
+- **Question.** `PIPELINE.mermaid` C4/R8 carry a lossless compression stage; FORMULATION §6 omitted it. Keep or drop?
+- **Decision.** Keep. Compression sits between checksum and whitening, with the checksum computed over the declared object before compression.
+- **Why.** It reduces $m$ only; it does not affect $Q$, since freed capacity is taken by fresh randomness $r$ (C.1) and both streams are uniform. It is therefore capacity headroom, retained against the possibility that R1 measures the canonical object large relative to $N$. It does no uniformity work — W.1 is $W$'s job, and L18 forbids treating the two as interchangeable.
+- **Consequences.** $C$ and $C^{-1}$ enter the bit-exact recovery contract as R.5: the format must be declared and frozen, pinned in `MODEL_CARD.md` alongside $\theta$. The concrete form of $C$ is set at R2. Revisit if R1 shows the payload well inside the 10% operating point, in which case the component earns nothing and can be removed.
+- **Status.** RESOLVED 11 Aug 2026 — LOG H-0XX.
 ---
 
 ## OPEN
