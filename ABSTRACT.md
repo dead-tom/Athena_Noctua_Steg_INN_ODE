@@ -4,4 +4,5 @@
 
 The project is made up of three parts; a video, live demonstration, and provisional algorithm, and is a complementary precursor to *Silent Signal* (forthcoming WIP). The audiovisual piece was accompanied by a live spectrogram analysis and discussion, presented before a live audience. To strengthen the thesis, the work has since evolved into a full exploration framework of time-domain signal hiding using an invertible Neural Network (INN).
 
-Full concept: [`docs/concept/PROJECT_CONCEPT.md`](docs/concept/PROJECT_CONCEPT.md)
+Full concept MD: [`docs/concept/PROJECT_CONCEPT.md`](docs/concept/PROJECT_CONCEPT.md)
+Full concept PDF: [`docs/concept/PROJECT_CONCEPT.pdf`](docs/concept/PROJECT_CONCEPT.pdf)
