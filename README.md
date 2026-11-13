@@ -1,6 +1,13 @@
-# Athena Noctua
 
-![Athena Noctua, Giant Eagle Owl in infrared](media/video_screenshots/video_screenshot_3.png)
+<h1 align="center">Athena Noctua</h1>
+
+<p align="center">
+  <img src="media/zine_pics/Screenshot%20_frontpage.png" alt="Athena Noctua" width="700">
+</p>
+
+<p align="center">
+  <a href="docs/concept/PROJECT_CONCEPT.pdf"><b>Read the full concept (PDF)</b></a>
+</p>
 
 > " The owl of Minerva takes flight only at **dusk** "
 
@@ -9,6 +16,14 @@
 ---
 
 ## Abstract
+
+<p align="center">
+  <img src="media/zine_pics/Screenshot _coins.png" alt="Athena Noctua" width="700">
+</p>
+
+<p align="center">
+  <img src="media/zine_pics/Screenshot_text.png" alt="Athena Noctua" width="700">
+</p>
 
 **The project, Athena Noctua, presents an illustrative demonstration that validates the paradigm of applied anthropomorphism and biomimicry in Machine Learning and Artificial Intelligence architectures. It is a practical representation of the inherent dangers of adversarial manipulation in a latent dimension. Biomimicry in development, design and presentation undermines both the capabilities of AI systems, and the way we receive and evaluate them. The project exposes the potential for dominance over human perception.**
 
@@ -19,6 +34,7 @@ The project is made up of three parts; a video, live demonstration, and provisio
 | **I** | LIVE AUDIOVISUAL PRESENTATION + SPECTROGRAM ANALYSIS | Complete |
 | **II** | A REVERSIBLE NORMALISING FLOW-BASED MODEL + SYNTHETIC SILENCE SAMPLE | In progress |
 | **III** | *Silent Signal* | Forthcoming |
+
 
 ---
 
