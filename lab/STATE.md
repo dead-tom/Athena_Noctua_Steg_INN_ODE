@@ -113,6 +113,7 @@ The full register, with the reasoning and consequences of each choice, lives in 
 | D-F26 | Fingerprinting / misdirection: the origin idea, undocumented | **OPEN** — Tessa to write 2–3 lines | 
 | D-DISTRIBUTION | The WAV is the artefact; published media is documentation | RESOLVED 30 Jul |
 | D-WRITEUP | Repo-first, concept-led, technical strand visible | RESOLVED 30 Jul |
+| D-COMPRESS | Lossless compression retained before whitening | RESOLVED 11 Aug |
 
 ## 5. IDEAS — pointer
 
@@ -126,7 +127,7 @@ The full register (F1–F38, statuses, leads, grounding) is in `IDEAS.md`. Curre
 
 If a run is blocked purely by hardware, escalate compute (rent A100/H100 by the hour) rather than shrink the experiment. "Binding on the 2080" describes the current machine, not a limit.
 
-**Two machines, one repository.** Authoring, documents and repository work happen on the MacBook Pro (`~/Dropbox/GITHUB/Athena_Noctua_Steg_INN_ODE`). Training happens on the Windows laptop (`C:\Users\tessa\Dropbox\GITHUB\Athena_Noctua_Steg_INN_ODE`), RTX 2080 Max-Q 8.6 GB, CUDA 12.9, PyTorch 2.5.1+cu121, Python 3.11.6, float32 / AMP off. The codec's conceal/reveal path is integer and deterministic (L14); floats appear only on a training or critic path.
+**Two machines, one repository.** Authoring, documents and repository work happen on the MacBook Pro (/Users/tessaedwards/Projects/Athena_Noctua_Steg_INN_ODE). Training happens on the Windows laptop (`C:\Users\tessa\Dropbox\GITHUB\Athena_Noctua_Steg_INN_ODE`), RTX 2080 Max-Q 8.6 GB, CUDA 12.9, PyTorch 2.5.1+cu121, Python 3.11.6, float32 / AMP off. The codec's conceal/reveal path is integer and deterministic (L14); floats appear only on a training or critic path.
 
 *Caution (added 29 Jul):* the repository lives inside Dropbox and is opened on both machines. Dropbox syncing a live `.git` directory while both machines are awake can corrupt the index. Work on one machine at a time, let the sync settle before switching, and if the repository ever reports a corrupt or locked index, stop and re-clone rather than repairing in place. Moving the repository out of Dropbox and pushing to a remote instead is the durable fix.
 
