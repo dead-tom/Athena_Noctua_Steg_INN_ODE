@@ -1,0 +1,7 @@
+# Phase 1 code (src/athena). Python 3.11. Versions TBC.
+torch==2.5.1
+numpy
+scipy
+soundfile
+matplotlib
+Pillow
